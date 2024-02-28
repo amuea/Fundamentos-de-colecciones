@@ -1,0 +1,176 @@
+# Definición de la clase Producto
+# Esta clase modela un producto único con nombre, cantidad y precio.
+class Producto:
+# Constructor de la clase con tres parámetros: nombre, cantidad y precio
+    def __init__(self, id_producto, nombre, cantidad, precio):
+        self.id_producto = id_producto
+        self.nombre = nombre
+        self.cantidad = cantidad
+        self.precio = precio
+
+    def __str__(self):
+        return f"{self.nombre}, Cantidad: {self.cantidad}, Precio: ${self.precio}"
+
+# Definición de la clase Inventario
+# Esta clase maneja una lista de productos.
+class Inventario:
+# Constructor de la clase Inventario
+    # Inicializa la lista de productos como vacía
+    def __init__(self):
+        self.productos = {}
+
+    # Método para añadir nuevos productos
+    def añadir_productos(self, producto):
+        if producto.id_producto in self.productos:
+            print("Error: Producto ya existe.")
+        else:
+            self.productos[producto.id_producto] = producto
+
+    # Método para eliminar productos
+    def eliminar_productos(self, id_producto):
+        if id_producto in self.productos:
+            del self.productos[id_producto]
+        else:
+            print("Error: Producto no encontrado.")
+
+    # Método para actualizar la cantidad o precio de un producto
+    def actualizar_producto(self, id_producto, cantidad=None, precio=None):
+        if id_producto in self.productos:
+            if cantidad is not None:
+                self.productos[id_producto].cantidad = cantidad
+            if precio is not None:
+                self.productos[id_producto].precio = precio
+        else:
+            print("Error: Producto no encontrado.")
+
+    # Método para buscar productos por nombre
+    def buscar_productos(self, nombre):
+        for producto in self.productos.values():
+            if nombre.lower() in producto.nombre.lower():
+                print(producto)
+
+    # Método para mostrar todos los productos en el inventario
+    def mostrar_inventario(self):
+        for producto in self.productos.values():
+            print(producto)
+
+
+# Creación de una lista
+frutas = ["manzana", "pera", "coco"]
+# Añadir un elemento
+frutas.append("fresa")
+frutas.pop(1, "uva")
+# Acceder a un elemento
+print(frutas[0])  # Imprime "manzana"
+print(frutas[1])  # Imprime "uva"
+# Eliminar un elemento
+frutas.remove("pera")
+frutas.pop(1)
+# Imprimir la lista modificada
+print(frutas)  # Imprime ['manzana', 'uva', 'fresa']
+
+# Creación de un diccionario con información de un producto
+#producto = {
+#    "nombre": "manzana", "pera", "coco",
+#    "cantidad": "3", "5", "1",
+#    "precio": 0.75, 1.25, 1.00
+#}
+producto = dict()
+producto["nombre"] = "manzana", "pera", "coco"
+producto["cantidad"] = "3", "5", "1"
+producto["precio"] = 0.75, 1.25, 1.00
+# Acceso a un valor
+print(producto["nombre"])  # Salida: manzana, pera, coco
+# Modificación de un valor
+producto["precio"] = 1, 2, 2
+# Agregar un nuevo par clave-valor
+producto["fruta"] = "Kiwi"
+print(f'Fruta agregada: {producto["fruta"]}')
+# Eliminación de un par clave-valor
+#del producto["fruta"]
+print(f'Fruta eliminada: {producto.pop("fruta")}')
+# Uso de .items() para iterar sobre el diccionario
+for clave, valor in producto.items():
+    print(f"{clave}: {valor}")
+
+# Creación de un conjunto
+frutas = {"manzana", "pera", "coco"}
+# Agregar un elemento
+frutas.add("fresa")
+# Eliminar un elemento
+frutas.remove("pera")  # Usar discard("pera") para evitar errores si no existe
+# Operaciones de conjunto
+vegetales = {"tomate", "pimiento", "cebolla"}
+union = frutas | vegetales
+interseccion = frutas & vegetales
+diferencia = frutas - vegetales
+print("Unión:", union)
+print("Intersección:", interseccion)
+print("Diferencia:", diferencia)
+
+# Creación de una tupla
+mi_tupla = (1, "dos", 3.0)
+# Acceso a un elemento
+print(mi_tupla[1])  # Imprime "dos"
+# Desempaquetado de una tupla
+a, b, c = mi_tupla
+print(a, b, c)  # Imprime 1 dos 3.0
+# Concatenación de tuplas
+nueva_tupla = mi_tupla + (4, 5)
+print(nueva_tupla)  # Imprime (1, 'dos', 3.0, 4, 5)
+
+
+# Abre el archivo en modo lectura y lo cierra después de imprimir su contenido.
+archivo = open('inventario.txt', 'r')
+print(archivo.read())  # Imprime el contenido del archivo
+archivo.close()  # Cierra el archivo
+
+# Abre el archivo en modo escritura (creándolo si no existe), escribe en él y luego lo cierra.
+archivo = open('inventario.txt', 'w')
+archivo.write('Este es un nuevo archivo.')  # Escribe en el archivo
+archivo.close()  # Cierra el archivo
+
+# Abre el archivo en modo añadir, añade una nueva línea y luego lo cierra.
+archivo = open('inventario.txt', 'a')
+archivo.write('\nAñadiendo una segunda línea.')  # Añade nueva línea de texto al archivo
+archivo.close()  # Cierra el archivo
+
+# Abre el archivo en modo lectura y lo cierra después de imprimir su contenido.
+archivo = open('inventario.txt', 'r')
+print(archivo.read())  # Imprime el contenido del archivo
+archivo.close()  # Cierra el archivo
+
+
+# Interfaz de usuario en la consola
+def menu():
+    inventario = Inventario()
+    while True:
+        print("\n1. Añadir Productos\n2. Eliminar Productos\n3. Actualizar Producto\n4. Buscar Productos\n5. Mostrar Inventario\n6. Salir")
+        opcion = input("Seleccione una opción: ")
+        if opcion == '6':
+            break
+        elif opcion == '1':
+            id_producto = input("Añade el ID del producto: ")
+            nombre = input("Añade el nombre del producto: ")
+            cantidad = int(input("Añade la cantidad del producto: "))
+            precio = float(input("Añade el precio del producto: "))
+            producto = Producto(id_producto, nombre, cantidad, precio)
+            inventario.añadir_productos(producto)
+        elif opcion == '2':
+            id_producto = input("Añade el ID del producto a eliminar: ")
+            inventario.eliminar_productos(id_producto)
+        elif opcion == '3':
+            id_producto = input("Añade el ID del producto a actualizar: ")
+            cantidad = input("Añade la nueva cantidad (dejar en blanco para no cambiar): ")
+            precio = input("Añade el nuevo precio (dejar en blanco para no cambiar): ")
+            cantidad = int(cantidad) if cantidad else None
+            precio = float(precio) if precio else None
+            inventario.actualizar_producto(id_producto, cantidad, precio)
+        elif opcion == '4':
+            nombre = input("Añade el nombre del producto a buscar: ")
+            inventario.buscar_productos(nombre)
+        elif opcion == '5':
+            inventario.mostrar_inventario()
+
+if __name__ == "__main__":
+    menu()
